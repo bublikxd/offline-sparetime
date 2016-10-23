@@ -42,8 +42,10 @@ return [
             'showScriptName' => false,
             'rules' => [
             ],
+        ],*/
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
         ],
-        */
     ],
     'params' => $params,
 ];
