@@ -6,12 +6,14 @@ use yii\helpers\Html;
 use dosamigos\leaflet\types\LatLng;
 use dosamigos\leaflet\layers\Marker;
 
-$this->title = 'About';
+$this->title = 'Über das Projekt';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>This is the About page. You may modify the following file to customize its content:</p>
-
+    <p>Diese Web-Applikation soll den Bürgern die Suche des Spielplatzes erleichtern.</p>
+    <p>Dieses Projekt ist im Rahmen der Open Data Hackaton in Dresden entstanden.</p>
+    <br />
+    <p>Entwickelt von Gregor Doroschenko gregordoroschenko@yandex.com</p>
 </div>
