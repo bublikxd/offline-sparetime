@@ -59,8 +59,17 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
-    <div class="container">
+    <?php
+        $getRoute = Yii::$app->controller->route;
+        if ($getRoute == 'site/map') {
+            $cssClass = 'container-fluid';
+            $isMap = true;
+        } else {
+            $cssClass = 'container';
+            $isMap = false;
+        }
+    ?>
+    <div class="<?= $cssClass ?>">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
