@@ -12,6 +12,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\FeedbackForm;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -132,6 +134,27 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays contact page.
+     *
+     * @return mixed
+     */
+    public function actionFeedback()
+    {
+        $model = new FeedbackForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+                Yii::$app->session->setFlash('success', 'Vielen Dank für Ihren Feedbeck!');
+            } else {
+                Yii::$app->session->setFlash('error', 'Er ist Tot, Jim!');
+            }
+
+            return $this->refresh();
+        } else {
+            return $this->render('detail');
+        }
+    }
+
+    /**
      * Displays about page.
      *
      * @return mixed
@@ -139,6 +162,28 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Displays map page.
+     *
+     * @return mixed
+     */
+    public function actionDetail()
+    {
+        $model = new FeedbackForm();
+        $id = Yii::$app->getRequest()->getQueryParam('id');
+        $jsonData = json_decode(file_get_contents(Yii::getAlias('@files').'/json/playplaces.json'));
+        $detail = [];
+        foreach ($jsonData->features as $feature) {
+            if ($feature->properties->autoid == $id) {
+                $detail = $feature->properties;
+            }
+        }
+        return $this->render('detail', [
+            'detail' => $detail,
+            'model' => $model
+        ]);
     }
 
     /**
